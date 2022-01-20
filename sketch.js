@@ -3,9 +3,9 @@
  * @date 2022-01-18
  *
  * coding plan 🔧
- * ☐ display black background, white text.
- * ☐ write 'i' and 'm' on screen to compare their widths
- *     ☐ check your chrome zoom settings. accurate results only at 100%
+ * ☒ display black background, white text.
+ * ☒ write 'i' and 'm' on screen to compare their widths
+ *     ☒ check your chrome zoom settings. accurate results only at 100%
  * ☐ measure each character's width by checking pixels in order
  *     ☐ loadpixels in small canvas: 30x50 or so
  *     ☐ iterate through every canvas pixel from left to right
@@ -44,16 +44,48 @@ function preload() {
 
 function setup() {
     // createCanvas(640, 360, WEBGL)
-    createCanvas(50, 50);
+    createCanvas(30, 50);
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, FONT_SIZE)
-    textAlign(CENTER, CENTER)
+    // textAlign(CENTER, CENTER)
     background(0, 0, 0)
 
     fill(0, 0, 100)
     noStroke()
 
-    text("m", width/2, height/2)
+    loadPixels()
+    let d = pixelDensity()
+    text("i", 0, height/2)
+
+    /*
+        My log for this program:
+            Cody and I both did not iterate when we were doing out
+            textWidth project today. The best outcome was that I started by
+            iterating with a very simple example on my drawing pad: a 3 by
+            3 grid with randomly turned on pixel "characters". This was
+            supposed to be a 15-minute project, but it took 60 minutes
+            instead. After we completed our basic example, we could iterate
+            from there, tracing my code with 4x4 and uneven graphics.
+    */
+
+    // define variables: startX is when we first see white, endX is when we
+    // stop seeing white
+    // let startX = 0
+    let endX
+    // loop through every pixel, searching for white
+    for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+            let off = (y * width + x) * d * 4
+            if (pixels[off] !== 0 || pixels[off+1] !== 0 || pixels[off+2] !== 0) {
+                endX = x
+                // we've found the white, so we shouldn't search for more.
+                break
+            }
+        }
+    }
+
+    // console.log("startX: " + startX)
+    console.log("endX: " + endX)
 
     let input = "I couldn't even get one pixel working because my" +
         " generatePixel function didn't work. I need four nested loops to" +
