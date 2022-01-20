@@ -43,16 +43,22 @@ function preload() {
 
 
 function setup() {
-    createCanvas(640, 360, WEBGL)
+    // createCanvas(640, 360, WEBGL)
+    createCanvas(50, 50);
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, FONT_SIZE)
+    textAlign(CENTER, CENTER)
+    background(0, 0, 0)
 
     fill(0, 0, 100)
     noStroke()
 
-    background(234, 34, 24)
+    text("m", width/2, height/2)
 
-    let input = "I couldn't even get one pixel working because my generatePixel function didn't work. I need four nested loops to be able to complete my task because I don't know how to do this otherwise. It seems like I'm loading just fine."
+    let input = "I couldn't even get one pixel working because my" +
+        " generatePixel function didn't work. I need four nested loops to" +
+        " be able to complete my task because I don't know how to do this" +
+        " otherwise. It seems like I'm loading just fine."
 
     displayPassage(input)
 
