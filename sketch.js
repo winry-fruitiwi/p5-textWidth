@@ -53,7 +53,7 @@ function setup() {
     fill(0, 0, 100)
     noStroke()
 
-    charWidth("m")
+    charWidth("j")
 
     let input = "I couldn't even get one pixel working because my" +
         " generatePixel function didn't work. I need four nested loops to" +
@@ -100,9 +100,10 @@ function charWidth(char) {
     g.background(0, 0, 0)
     g.fill(0, 0, 100)
 
-    let d = pixelDensity()
+    let d = g.pixelDensity()
+    g.text(char, 0, height/2)
     text(char, 0, height/2)
-    loadPixels()
+    g.loadPixels()
 
     /*
         My log for this program:
@@ -131,20 +132,36 @@ function charWidth(char) {
     //     }
     // } // code I did not iterate on
 
+    // // loop through every pixel (column-major)
+    // for (let x = 0; x < width; x++) {
+    //     for (let y = 0; y < height; y++) {
+    //         // calculate what index we need
+    //         // something is wrong with the offset or the if statement
+    //         let off = (y * width + x) * d * 4 // TODO how does this work? derive
+    //         if (pixels[off] !== 0 || pixels[off+1] !== 0 || pixels[off+2] !== 0) {
+    //             console.log("hey, what is happening here?")
+    //             endX = x
+    //             // we don't need to search for any more white pixels
+    //             break
+    //         }
+    //     }
+    // } // working code, hopefully better comments
+
     // loop through every pixel (column-major)
-    for (let x = 0; x < width; x++) {
-        for (let y = 0; y < height; y++) {
+    for (let x = 0; x < g.width; x++) {
+        for (let y = 0; y < g.height; y++) {
             // calculate what index we need
             // something is wrong with the offset or the if statement
-            let off = (y * width + x) * d * 4 // TODO how does this work? derive
-            if (pixels[off] !== 0 || pixels[off+1] !== 0 || pixels[off+2] !== 0) {
-                console.log("hey, what is happening here?")
+            let off = (y * g.width + x) * d * 4 // TODO how does this work? derive
+            if (g.pixels[off] !== 0 || g.pixels[off+1] !== 0 || g.pixels[off+2] !== 0) {
+                // console.log("hey, what is happening here?") // test
                 endX = x
                 // we don't need to search for any more white pixels
                 break
             }
         }
-    }
+    } // now we're using a graphics object called g, so we need to add g. to
+    // almost everything! It's the g dot song!
 
     // console.log("startX: " + startX)
     console.log("endX: " + endX)
