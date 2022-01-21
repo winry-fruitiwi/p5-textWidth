@@ -53,39 +53,7 @@ function setup() {
     fill(0, 0, 100)
     noStroke()
 
-    loadPixels()
-    let d = pixelDensity()
-    text("i", 0, height/2)
-
-    /*
-        My log for this program:
-            Cody and I both did not iterate when we were doing out
-            textWidth project today. The best outcome was that I started by
-            iterating with a very simple example on my drawing pad: a 3 by
-            3 grid with randomly turned on pixel "characters". This was
-            supposed to be a 15-minute project, but it took 60 minutes
-            instead. After we completed our basic example, we could iterate
-            from there, tracing my code with 4x4 and uneven graphics.
-    */
-
-    // define variables: startX is when we first see white, endX is when we
-    // stop seeing white
-    // let startX = 0
-    let endX
-    // loop through every pixel, searching for white
-    for (let x = 0; x < width; x++) {
-        for (let y = 0; y < height; y++) {
-            let off = (y * width + x) * d * 4
-            if (pixels[off] !== 0 || pixels[off+1] !== 0 || pixels[off+2] !== 0) {
-                endX = x
-                // we've found the white, so we shouldn't search for more.
-                break
-            }
-        }
-    }
-
-    // console.log("startX: " + startX)
-    console.log("endX: " + endX)
+    charWidth("m")
 
     let input = "I couldn't even get one pixel working because my" +
         " generatePixel function didn't work. I need four nested loops to" +
@@ -93,7 +61,6 @@ function setup() {
         " otherwise. It seems like I'm loading just fine."
 
     displayPassage(input)
-
 }
 
 
@@ -133,6 +100,54 @@ function charWidth(char) {
     g.background(0, 0, 0)
     g.fill(0, 0, 100)
 
+    let d = pixelDensity()
+    text(char, 0, height/2)
+    loadPixels()
+
+    /*
+        My log for this program:
+            Cody and I both did not iterate when we were doing our
+            textWidth project today. The best outcome was that I started by
+            iterating with a very simple example on my drawing pad: a 3 by
+            3 grid with randomly turned on pixel "characters". This was
+            supposed to be a 15-minute project, but it took 60 minutes
+            instead. After we completed our basic example, we could iterate
+            from there, tracing my code with 4x4 and uneven graphics.
+    */
+
+    // define variables: startX is when we first see white, endX is when we
+    // stop seeing white
+    // let startX = 0
+    let endX
+    // loop through every pixel, searching for a non-black pixel
+    // for (let x = 0; x < width; x++) {
+    //     for (let y = 0; y < height; y++) {
+    //         let off = (y * width + x) * d * 4
+    //         if (pixels[off] !== 0 || pixels[off+1] !== 0 || pixels[off+2] !== 0) {
+    //             endX = x
+    //             // we've found the white, so we shouldn't search for more.
+    //             break
+    //         }
+    //     }
+    // } // code I did not iterate on
+
+    // loop through every pixel (column-major)
+    for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+            // calculate what index we need
+            // something is wrong with the offset or the if statement
+            let off = (y * width + x) * d * 4 // TODO how does this work? derive
+            if (pixels[off] !== 0 || pixels[off+1] !== 0 || pixels[off+2] !== 0) {
+                console.log("hey, what is happening here?")
+                endX = x
+                // we don't need to search for any more white pixels
+                break
+            }
+        }
+    }
+
+    // console.log("startX: " + startX)
+    console.log("endX: " + endX)
 }
 
 
